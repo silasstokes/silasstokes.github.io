@@ -1,5 +1,5 @@
 ---
-title: 3d_printed_enclosure
+title: 3d printer enclosure
 description: TODO
 draft: false
 date: 2024-01-15

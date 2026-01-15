@@ -1,5 +1,5 @@
 ---
-title: pi_pico_epoxy_pour
+title: flowers + epoxy + rp2040
 description: TODO
 draft: false
 date: 2024-04-25

@@ -1,5 +1,5 @@
 ---
-title: supercharge_imessage_with_gpt
+title: ChatGPT iMessage Bot
 description: TODO
 draft: false
 date: 2023-06-02

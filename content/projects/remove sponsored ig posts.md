@@ -1,5 +1,5 @@
 ---
-title: removing_sponsored_ig_posts_with_antigram
+title: remove sponsored ig posts
 description: TODO
 draft: false
 date: 2023-06-28

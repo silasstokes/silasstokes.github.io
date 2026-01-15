@@ -1,7 +1,7 @@
 ---
-title: boids_algo_on_pi_pico
+title: boids algo rp2040
 draft: false
-tags: 
+tags:
 date: 2025-06-17
 ---
 I have been exploring the raspberry pi pico and it's rp2040 processor quite a bit. I came across the lectures from Cornell's Digital Systems Design Using Microcontrollers where the instructor assigns a project to implement boid's algorithm on the pico. I thought that if designed right - it would look like a very cool desk piece. Here's what I came up with:
