@@ -132,9 +132,9 @@ export const defaultListPageLayout: PageLayout = {
       },
       mapFn: (node) => {
         // Add dash prefix to titles
-        if (!node.displayName.startsWith("- ")) {
-          node.displayName = "- " + node.displayName
-        }
+          // if (!node.displayName.startsWith("- ")) {
+          //   node.displayName = "- " + node.displayName
+          // }
         // Convert folders with no visible children to files
         if (node.isFolder && node.children.length === 0) {
           node.isFolder = false
