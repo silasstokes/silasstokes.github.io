@@ -38,7 +38,67 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      filterFn: (node) => {
+        // Hide asset folders
+        if (node.isFolder && node.displayName === "assets") {
+          return false
+        }
+        return true
+      },
+      mapFn: (node) => {
+        // Convert folders with no visible children to files
+        // This makes folders like "header pin switches" (which only have index.md + assets)
+        // appear as regular links without a dropdown
+        // Add dash prefix to titles
+        // if (!node.isFolder && !node.displayName.startsWith("- ")) {
+        //   node.displayName = "- " + node.displayName
+        // }
+        // if (node.isFolder) {
+        //   node.displayName = "📁 " + node.displayName
+        // } else {
+        //   node.displayName = "📄 " + node.displayName
+        // }
+
+        if (node.isFolder && node.children.length === 0) {
+          node.isFolder = false
+        }
+      },
+
+      sortFn: (a, b) => {
+        // First, sort folders before files    
+        // if (a.isFolder && !b.isFolder) return -1
+        // if (!a.isFolder && b.isFolder) return 1
+
+        // // If both are folders, sort alphabetically    
+        // if (a.isFolder && b.isFolder) {
+        //   return a.displayName.localeCompare(b.displayName, undefined, {
+        //     numeric: true,
+        //     sensitivity: "base",
+        //   })
+        // }
+
+        // If both are files, sort by creation date (newest first)  
+        const aCreated = a.data?.date  // Changed from frontmatter.created  
+        const bCreated = b.data?.date  // Changed from frontmatter.created  
+
+        if (aCreated && bCreated) {
+          return new Date(bCreated).getTime() - new Date(aCreated).getTime()
+        }
+
+        // If only one has a creation date, prioritize it    
+        if (aCreated && !bCreated) return -1
+        if (!aCreated && bCreated) return 1
+
+        // Fallback to alphabetical sorting    
+        return a.displayName.localeCompare(b.displayName, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        })
+      },
+
+      order: ["filter", "sort", "map"],
+    }),
   ],
   right: [
     // Component.Graph(),
@@ -62,7 +122,37 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      filterFn: (node) => {
+        // Hide asset folders
+        if (node.isFolder && node.displayName === "assets") {
+          return false
+        }
+        return true
+      },
+      mapFn: (node) => {
+        // Convert folders with no visible children to files
+        if (node.isFolder && node.children.length === 0) {
+          node.isFolder = false
+        }
+        // Add dash prefix to titles
+        if (!node.displayName.startsWith("- ")) {
+          node.displayName = "- " + node.displayName
+        }
+      },
+      sortFn: (a, b) => {
+        // Sort by date (newest first), falling back to alphabetical
+        const aDate = a.data?.date
+        const bDate = b.data?.date
+        if (aDate && bDate) {
+          return new Date(bDate).getTime() - new Date(aDate).getTime()
+        }
+        if (aDate && !bDate) return -1
+        if (!aDate && bDate) return 1
+        return a.displayName.localeCompare(b.displayName)
+      },
+      order: ["filter", "map", "sort"],
+    }),
   ],
   right: [],
 }
